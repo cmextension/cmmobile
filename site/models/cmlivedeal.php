@@ -254,36 +254,32 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 
 		if (!empty($deals))
 		{
+			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_cmlivedeal/tables', 'CMLiveDealTable');
 			JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_cmlivedeal/models', 'CMLiveDealModel');
 
-			$imagesModel = JModelLegacy::getInstance('Images', 'CMLiveDealModel');
-			$loadedImages = array();
+			$imageModel = JModelLegacy::getInstance('Image', 'CMLiveDealModel');
+
+			$imagePath = JComponentHelper::getParams('com_media')->get('image_path', 'images');
+			$merchantPath = $params->get('image_folder');
 
 			foreach ($deals as &$deal)
 			{
-				if (!isset($loadedImages[$deal->user_id]))
+				$deal->thumbnail = '';
+				$folderPath = JPath::clean(JPATH_ROOT . '/' . $imagePath . '/' . $merchantPath . '/' . $deal->user_id);
+				$image = $imageModel->getItem($deal->image_id);
+
+				if (!empty($image->id))
 				{
-					$images = $imagesModel->getImages($deal->user_id);
+					$filePath = $folderPath . '/' . $image->file_name;
 
-					if (!empty($images))
+					if (JFile::exists($filePath))
 					{
-						$deal->images = array();
-
-						foreach ($images as $image)
-						{
-							$deal->images[] = $image->file_path;
-							$loadedImages[$deal->user_id] = $deal->images;
-						}
-					}
-					else
-					{
-						$loadedImages[$deal->user_id] = array();
+						$deal->thumbnail = JUri::root() . $imagePath . '/' . $merchantPath . '/' . $deal->user_id . '/' . $image->file_name;
 					}
 				}
-				else
-				{
-					$deal->images = $loadedImages[$deal->user_id];
-				}
+
+				unset($deal->user_id);
+				unset($deal->image_id);
 			}
 		}
 
