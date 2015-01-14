@@ -10,8 +10,8 @@
 		<maintainerurl>http://www.cmext.vn/</maintainerurl>
 		<infourl title="Freshmail subscription">https://github.com/cmextension/cmmobile</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/cmextension/cmmobile/archive/v0.0.2.zip</downloadurl>
-			<downloadurl type="full" format="tar.gz">https://github.com/cmextension/cmmobile/archive/v0.0.2.tar.gz</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/cmextension/cmmobile/archive/v0.0.2-alpha.zip</downloadurl>
+			<downloadurl type="full" format="tar.gz">https://github.com/cmextension/cmmobile/archive/v0.0.2-alpha.tar.gz</downloadurl>
 		</downloads>
 		<targetplatform name="joomla" version="3.*"/>
 		<client>0</client>
