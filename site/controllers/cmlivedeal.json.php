@@ -108,7 +108,6 @@ class CMMobileControllerCMLiveDeal extends CMMobileControllerAbstract
 		$total = $model->getTotalCoupons();
 
 		$data = array(
-			'login'		=> false,
 			'total'		=> $total,
 			'coupons'	=> $coupons,
 		);
@@ -133,10 +132,6 @@ class CMMobileControllerCMLiveDeal extends CMMobileControllerAbstract
 
 		$model = $this->getModel('CMLiveDeal', 'CMMobileModel');
 
-		$response = array(
-			'login'	=> false
-		);
-
 		/**
 		 * $data['success']: true if capture successfully.
 		 * $data['message']: error message if fail.
@@ -146,12 +141,15 @@ class CMMobileControllerCMLiveDeal extends CMMobileControllerAbstract
 
 		if ($data['success'])
 		{
-			$response['coupon'] = $data['coupon'];
+			$response = array(
+				'coupon'	=> $data['coupon']
+			);
+
 			$json = new JResponseJson($response);
 		}
 		else
 		{
-			$json = new JResponseJson($response, $data['message'], true);
+			$json = new JResponseJson(null, $data['message'], true);
 		}
 
 		$this->displayView($json);
