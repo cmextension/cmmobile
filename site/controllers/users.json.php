@@ -37,14 +37,12 @@ class CMMobileControllerUsers extends CMMobileControllerAbstract
 		// Perform the log in.
 		$token = CMMobileSession::login($username, $password);
 
-		$data = array(
-			'function'	=> 'login',
-		);
-
 		if ($token != '')
 		{
 			// Login succeeded. Return the token.
-			$data ['token'] = $token;
+			$data = array(
+				'token'	=> $token,
+			);
 
 			$message = JText::_('COM_CMMOBILE_USERS_LOGIN_SUCCESS');
 			$json = new JResponseJson($data, $message);
@@ -52,7 +50,7 @@ class CMMobileControllerUsers extends CMMobileControllerAbstract
 		else
 		{
 			// Login failed.
-			$json = new JResponseJson($data, JText::_('COM_CMMOBILE_USERS_LOGIN_FAILURE'), true);
+			$json = new JResponseJson(null, JText::_('COM_CMMOBILE_USERS_LOGIN_FAILURE'), true);
 		}
 
 		$this->displayView($json);
