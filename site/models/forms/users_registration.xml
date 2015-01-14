@@ -2,19 +2,20 @@
 <form>
 	<fieldset>
 		<field name="name" type="text" filter="string" required="true"
-			label="COM_CMMOBILE_USERS_REGISTER_NAME_LABEL"/>
+			label="COM_CMMOBILE_USERS_REGISTER_NAME_LABEL" />
 
 		<field name="username" type="text" required="true"
 			validate="username" filter="username"
 			label="COM_USERS_REGISTER_USERNAME_LABEL"
-			message="COM_USERS_REGISTER_USERNAME_MESSAGE"/>
+			message="COM_USERS_REGISTER_USERNAME_MESSAGE" />
 
 		<field name="password" type="password" filter="raw" required="true"
 			validate="password" field="password"
-			label="COM_USERS_PROFILE_PASSWORD_LABEL"/>
+			label="COM_USERS_PROFILE_PASSWORD_LABEL" />
 
 		<field name="email" type="email" filter="string" required="true"
 			validate="email" unique="true"
-			label="COM_USERS_REGISTER_EMAIL_LABEL"/>
+			label="COM_USERS_REGISTER_EMAIL1_LABEL"
+			message="COM_USERS_REGISTER_EMAIL1_MESSAGE" />
 	</fieldset>
 </form>
