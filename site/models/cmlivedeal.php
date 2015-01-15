@@ -147,10 +147,6 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 				$earthRadius = 6371;
 
 				$query->select("($earthRadius * acos(cos(radians($latitude)) * cos(radians(m.latitude)) * cos(radians(m.longitude) - radians($longitude)) + sin(radians($latitude)) * sin(radians(m.latitude)))) AS distance")
-					->join(
-						'LEFT',
-						$db->quoteName('#__cmlivedeal_merchants') . ' AS m ON ' . $db->quoteName('m.user_id') . ' = ' . $db->quoteName('a.user_id')
-					)
 					->having("distance <= $distance");
 			}
 		}
@@ -435,12 +431,14 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 			{
 				$keyword = $db->quote('%' . $db->escape($keyword, true) . '%');
 				$query->where(
-					$db->quoteName('m.name') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('m.address') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('m.phone') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('d.title') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('d.description') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('a.code') . ' LIKE ' . $keyword
+					'(' .
+						$db->quoteName('m.name') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('m.address') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('m.phone') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('d.title') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('d.description') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('a.code') . ' LIKE ' . $keyword .
+					')'
 				);
 			}
 
