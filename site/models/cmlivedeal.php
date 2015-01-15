@@ -147,10 +147,6 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 				$earthRadius = 6371;
 
 				$query->select("($earthRadius * acos(cos(radians($latitude)) * cos(radians(m.latitude)) * cos(radians(m.longitude) - radians($longitude)) + sin(radians($latitude)) * sin(radians(m.latitude)))) AS distance")
-					->join(
-						'LEFT',
-						$db->quoteName('#__cmlivedeal_merchants') . ' AS m ON ' . $db->quoteName('m.user_id') . ' = ' . $db->quoteName('a.user_id')
-					)
 					->having("distance <= $distance");
 			}
 		}
