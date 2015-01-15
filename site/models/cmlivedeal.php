@@ -431,12 +431,14 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 			{
 				$keyword = $db->quote('%' . $db->escape($keyword, true) . '%');
 				$query->where(
-					$db->quoteName('m.name') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('m.address') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('m.phone') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('d.title') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('d.description') . ' LIKE ' . $keyword . ' OR ' .
-					$db->quoteName('a.code') . ' LIKE ' . $keyword
+					'(' .
+						$db->quoteName('m.name') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('m.address') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('m.phone') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('d.title') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('d.description') . ' LIKE ' . $keyword . ' OR ' .
+						$db->quoteName('a.code') . ' LIKE ' . $keyword .
+					')'
 				);
 			}
 
