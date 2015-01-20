@@ -13,7 +13,7 @@ JFactory::getDocument()->addStyleSheet('components/com_cmmobile/assets/css/style
 	<?php echo $this->menu; ?>
 
 	<div class="row-fluid">
-		<h3>CM Mobile 0.0.3 (Alpha)</h3>
+		<h3>CM Mobile 0.0.4 (Alpha)</h3>
 		<p>If you discover bugs or want to help improve CM Mobile, please email to cmext.vn@gmail.com or create an issue at <a href="https://github.com/cmextension/cmmobile/issues" target="_blank">Github</a>.
 	</div>
 </div>
