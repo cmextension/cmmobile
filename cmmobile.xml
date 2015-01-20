@@ -28,6 +28,10 @@
 		</schemas>
 	</update>
 
+	<updateservers>
+		<server type="extension" priority="1" name="CM Mobile Update Server">https://raw.githubusercontent.com/cmextension/cmmobile/master/update.xml</server>
+	</updateservers>
+
 	<files folder="site">
 		<folder>controllers</folder>
 		<folder>helpers</folder>
