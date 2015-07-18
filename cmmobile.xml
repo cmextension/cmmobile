@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
 	<name>com_cmmobile</name>
-	<version>0.0.3</version>
+	<version>0.0.5</version>
 	<copyright>(C) 2014-2015 CMExtension team</copyright>
 	<author>CMExtension team</author>
 	<authorEmail>cmext.vn@gmail.com</authorEmail>
 	<authorUrl>www.cmext.vn</authorUrl>
 	<license>GNU General Public License version 2 or later</license>
-	<creationDate>January 2015</creationDate>
+	<creationDate>July 2015</creationDate>
 	<description>COM_CMMOBILE_XML_DESCRIPTION</description>
 
 	<install>

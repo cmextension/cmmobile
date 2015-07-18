@@ -39,7 +39,7 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 		$query->select(
 			$db->quoteName(
 				array(
-					'a.id', 'a.title', 'a.description', 'a.fine_print',
+					'a.id', 'a.alias', 'a.title', 'a.description', 'a.fine_print',
 					'a.user_id', 'a.image_id', 'a.starting_time'
 				)
 			)
@@ -48,7 +48,8 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 		$query->from($db->quoteName('#__cmlivedeal_deals') . ' AS a')
 			->where($db->quoteName('a.published') . ' = ' . $db->quote('1'))
 			->where($db->quoteName('a.approved') . ' = ' . $db->quote('1'))
-			->where($db->quoteName('a.starting_time') . ' <= ' . $db->quote($now));
+			->where($db->quoteName('a.starting_time') . ' <= ' . $db->quote($now))
+			->where($db->qn('a.ending_time') . ' >= ' . $db->q($now));
 
 		// Get merchant's info.
 		$query->select($db->quoteName('m.name') . ' AS merchant_name')
@@ -66,25 +67,6 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 				'LEFT',
 				$db->quoteName('#__cmlivedeal_merchants') . ' AS m ON ' . $db->quoteName('m.user_id') . ' = ' . $db->quoteName('a.user_id')
 			);
-
-		if ($integration == '')
-		{
-			$query->select($db->quoteName('a.ending_time') . ' AS ending_time')
-				->where($db->quoteName('ending_time') . ' >= ' . $db->quote($now));
-		}
-		else
-		{
-			$subQuery1 = CMLiveDealHelper::buildQueryUserActivePlans('a.user_id', $integration);
-
-			$subQuery2 = $db->getQuery(true)
-				->select($db->quoteName('p.length'))
-				->from($db->quoteName('#__cmlivedeal_plans') . ' AS p')
-				->where($db->quoteName('p.plan_id') . ' IN (' . $subQuery1->__toString() . ')')
-				->order($db->quoteName('p.ordering') . ' DESC');
-
-			$query->select('DATE_ADD(a.starting_time,INTERVAL (' . $subQuery2->__toString() . ' LIMIT 1) DAY) AS ending_time');
-			$query->having('ending_time >= ' . $db->quote($now));
-		}
 
 		// Filter by search in title.
 		$keyword = $jinput->$method->get('keyword', '', 'string');
@@ -257,6 +239,7 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 
 			$imagePath = JComponentHelper::getParams('com_media')->get('image_path', 'images');
 			$merchantPath = $params->get('image_folder');
+			$siteUrl = str_replace(JURI::root(true), '', substr(JURI::root(), 0, -1));
 
 			foreach ($deals as &$deal)
 			{
@@ -273,6 +256,8 @@ class CMMobileModelCMLiveDeal extends JModelLegacy
 						$deal->thumbnail = JUri::root() . $imagePath . '/' . $merchantPath . '/' . $deal->user_id . '/' . $image->file_name;
 					}
 				}
+
+				$deal->url = $siteUrl . CMLiveDealHelper::prepareRoute('index.php?option=com_cmlivedeal&view=deals&deal=' . $deal->id . '-' . $deal->alias);
 
 				unset($deal->user_id);
 				unset($deal->image_id);
